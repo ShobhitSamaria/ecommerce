@@ -8,6 +8,7 @@ import lombok.*;
 public class FraudCheckRequest {
 
     private String orderId;
+    private String userId;
     private Double orderAmount;
     private Integer userOrderFrequency;
     private Boolean locationMismatch;
