@@ -64,10 +64,19 @@ public class OrderService {
         // Save order first so we have the ID for fraud scoring
         Order savedOrder = orderRepository.save(order);
         
-        // Run fraud detection
-        performFraudCheck(savedOrder);
+        // NOTE: Fraud check is now run AFTER payment confirmation, not here
+        // This ensures the flow is: Select Payment → Confirm → Fraud Check
         
         return savedOrder;
+    }
+
+    // Run fraud detection AFTER payment is confirmed
+    // Called from confirmPayment() after user confirms transaction
+    public void runFraudCheckAfterPayment(String trackingId) {
+        Order order = orderRepository.findByOrderTrackingId(trackingId).orElse(null);
+        if (order != null) {
+            performFraudCheck(order);
+        }
     }
 
     // Calls fraud-service to analyze the order and updates fraud fields + order status
@@ -228,7 +237,13 @@ public class OrderService {
         if (order != null) {
             order.setOrderStatus(orderStatus);
             order.setTransactionStatus(transactionStatus);
-            return orderRepository.save(order);
+            Order savedOrder = orderRepository.save(order);
+            
+            // Run fraud check AFTER payment confirmation (Select Payment → Confirm → Fraud Check)
+            runFraudCheckAfterPayment(trackingId);
+            
+            // Reload order to get fraud results
+            return orderRepository.findByOrderTrackingId(trackingId).orElse(savedOrder);
         }
         return null;
     }

@@ -34,28 +34,14 @@ function Payment() {
                 cartItems: cart
             };
 
-            // Step 1: Place order (fraud check runs async in background)
+            // Step 1: Place order (NO fraud check yet - runs after payment confirmation)
             const result = await handlePlaceOrder(checkoutData);
 
             if (result.success) {
                 const orderTrackingId = result.data.orderTrackingId;
-                const orderStatus = result.data.orderStatus;
-
-                // Fraud check async callback: if SUSPICIOUS, order is PENDING_REVIEW
-                if (orderStatus === "PENDING_REVIEW") {
-                    setProcessing(false);
-                    clearCart();
-                    navigate("/order-review", {
-                        state: {
-                            orderId: orderTrackingId,
-                            fraudScore: result.data.fraudScore,
-                            reason: result.data.fraudReason
-                        }
-                    });
-                    return;
-                }
-
-                // Normal flow: show payment confirmation modal
+                
+                // Flow: Select Payment → Transaction Confirm → Fraud Check runs here
+                // Don't check for PENDING_REVIEW yet - wait for payment confirmation
                 setPendingOrderData({ orderTrackingId, checkoutData });
                 setShowConfirmModal(true);
                 setProcessing(false);
@@ -98,8 +84,23 @@ function Payment() {
 
                 if (paymentResult.success) {
                     console.log("Payment successful:", paymentResult.data);
-                    clearCart();
-                    navigate("/order-success", { state: { orderId: orderTrackingId } });
+                    
+                    // Check if fraud check marked order as suspicious
+                    const orderData = paymentResult.data;
+                    if (orderData?.fraudFlag === true || orderData?.orderStatus === "PENDING_REVIEW") {
+                        clearCart();
+                        navigate("/order-review", {
+                            state: {
+                                orderId: orderTrackingId,
+                                fraudScore: orderData?.fraudScore,
+                                reason: orderData?.fraudReason
+                            }
+                        });
+                    } else {
+                        // Normal order - go to success
+                        clearCart();
+                        navigate("/order-success", { state: { orderId: orderTrackingId } });
+                    }
                 } else {
                     console.error("Payment failed:", paymentResult.error);
                     // Fallback to separate update call
