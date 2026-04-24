@@ -85,8 +85,10 @@ function Payment() {
                 if (paymentResult.success) {
                     console.log("Payment successful:", paymentResult.data);
                     
-                    // Check if fraud check marked order as suspicious
-                    const orderData = paymentResult.data;
+                    // paymentResult.data = { payment: {...}, order: {...} }
+                    // The order object has the fraud score and status after confirmation
+                    const orderData = paymentResult.data?.order;
+                    
                     if (orderData?.fraudFlag === true || orderData?.orderStatus === "PENDING_REVIEW") {
                         clearCart();
                         navigate("/order-review", {
@@ -97,7 +99,7 @@ function Payment() {
                             }
                         });
                     } else {
-                        // Normal order - go to success
+                        // Normal order - go to success page with order ID
                         clearCart();
                         navigate("/order-success", { state: { orderId: orderTrackingId } });
                     }
