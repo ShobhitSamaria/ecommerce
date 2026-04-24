@@ -11,6 +11,9 @@ public class FraudCheckRequest {
     // Unique order identifier from order-service
     private String orderId;
 
+    // User ID who placed the order
+    private String userId;
+
     // Total monetary value of the order
     private Double orderAmount;
 

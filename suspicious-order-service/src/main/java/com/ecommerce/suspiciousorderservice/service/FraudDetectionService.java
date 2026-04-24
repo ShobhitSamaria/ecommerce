@@ -117,10 +117,18 @@ public class FraudDetectionService {
         // Build and save the fraud check record to the database
         FraudCheckRecord record = FraudCheckRecord.builder()
                 .orderId(request.getOrderId())
+                .userId(request.getUserId())
+                .orderAmount(request.getOrderAmount())
                 .fraudScore(score)
                 .status(status)
                 .reason(reason)
-                .checkedAt(LocalDateTime.now())
+                .paymentMethod(request.getPaymentMethod())
+                .locationMismatch(request.getLocationMismatch())
+                .userOrderFrequency(request.getUserOrderFrequency())
+                .accountAgeInDays(request.getAccountAgeInDays())
+                .failedPaymentAttempts(request.getFailedPaymentAttempts())
+                .orderHour(request.getOrderTime())
+                .createdAt(LocalDateTime.now())
                 .build();
 
         return fraudCheckRecordRepository.save(record);

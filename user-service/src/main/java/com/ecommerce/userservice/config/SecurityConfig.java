@@ -16,9 +16,13 @@ public class SecurityConfig {
                 // 1. Disable CSRF for testing APIs via Postman
                 .csrf(csrf -> csrf.disable())
 
-                // 2. Allow everyone to access Registration and Login
+                // 2. Allow everyone to access Registration, Login, and Account-Age check
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/users/register", "/api/users/login").permitAll()
+                        .requestMatchers(
+                                "/api/users/register",
+                                "/api/users/login",
+                                "/api/users/account-age"
+                        ).permitAll()
                         .anyRequest().authenticated() // Lock everything else
                 );
 

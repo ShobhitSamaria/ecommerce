@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -26,17 +27,19 @@ public class UserController {
     // --- REGISTRATION LOGIC ---
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
+        // Normalize email to lowercase
+        user.setEmail(user.getEmail().toLowerCase().trim());
+        
         // Negative Test Case: Check if email already exists
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body("Error: Email is already in use!");
+                    .body(Map.of("error", "Email is already in use!"));
         }
 
         User savedUser = userRepository.save(user);
-        return ResponseEntity.ok(Map.of(
-                "message", "User registered successfully",
-                "userId", savedUser.getId(),
-                "createdAt", savedUser.getCreatedAt().toString()
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+                "message", "Account created successfully! Please log in",
+                "userId", savedUser.getId()
         ));
     }
 

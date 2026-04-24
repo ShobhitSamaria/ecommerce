@@ -13,7 +13,10 @@ export const register = async (fullName, email, password) => {
         return response.data;
     } catch (error) {
         // Handling negative test cases from backend
-        throw error.response ? error.response.data : "Server Error";
+        const errorData = error.response?.data;
+        // Extract message from response (could be string or object with "error" key)
+        const message = errorData?.error || errorData?.message || errorData || "Server Error";
+        throw message;
     }
 };
 
@@ -29,7 +32,9 @@ export const login = async (email, password) => {
         }
         return response.data;
     } catch (error) {
-        throw error.response ? error.response.data : "Invalid Credentials";
+        const errorData = error.response?.data;
+        const message = errorData?.error || errorData?.message || errorData || "Invalid Credentials";
+        throw message;
     }
 };
 

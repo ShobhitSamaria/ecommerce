@@ -10,6 +10,7 @@ import com.ecommerce.order.util.OrderTrackingIdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,6 +76,7 @@ public class OrderService {
             // Build fraud check request
             FraudCheckRequest request = new FraudCheckRequest();
             request.setOrderId(order.getOrderTrackingId());
+            request.setUserId(order.getUserEmail());  // User identifier for fraud analysis
             request.setOrderAmount(order.getTotalAmount());
             request.setPaymentMethod("ONLINE"); // Default; updated by payment flow
 
