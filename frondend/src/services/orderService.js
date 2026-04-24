@@ -23,6 +23,7 @@ export const handlePlaceOrder = async (checkoutData) => {
             city: checkoutData.city,
             zipCode: checkoutData.zipCode,
             totalAmount: checkoutData.totalAmount,
+            paymentMethod: checkoutData.paymentMethod,
             orderStatus: "PENDING",
             transactionStatus: "PENDING",
             orderItems: orderItems

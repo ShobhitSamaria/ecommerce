@@ -31,6 +31,7 @@ function Payment() {
                 city: address.city || "",
                 zipCode: address.pincode || "",
                 totalAmount: total,
+                paymentMethod: method,  // Send payment method to backend
                 cartItems: cart
             };
 

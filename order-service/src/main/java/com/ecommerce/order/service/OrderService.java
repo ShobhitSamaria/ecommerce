@@ -87,7 +87,10 @@ public class OrderService {
             request.setOrderId(order.getOrderTrackingId());
             request.setUserId(order.getUserEmail());  // User identifier for fraud analysis
             request.setOrderAmount(order.getTotalAmount());
-            request.setPaymentMethod("ONLINE"); // Default; updated by payment flow
+            
+            // Use actual payment method from order (COD, card, upi) - default to ONLINE if not set
+            String paymentMethod = order.getPaymentMethod();
+            request.setPaymentMethod(paymentMethod != null ? paymentMethod : "ONLINE");
 
             // Count past orders from this user (frequency signal)
             int userOrderCount = orderRepository.findByUserEmail(order.getUserEmail()).size();

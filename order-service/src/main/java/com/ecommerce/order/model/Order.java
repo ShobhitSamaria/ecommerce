@@ -39,6 +39,9 @@ public class Order {
 
     // Whether billing address differs from shipping address (set at checkout)
     private Boolean locationMismatch = false;
+    
+    // Payment method selected by user (COD, CARD, UPI)
+    private String paymentMethod;
 
     public void addOrderItem(OrderItem item) {
         orderItems.add(item);
