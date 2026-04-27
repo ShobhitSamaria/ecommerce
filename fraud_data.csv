@@ -1,0 +1,9 @@
+orderId,userId,orderAmount,fraudScore,status,reason,paymentMethod,locationMismatch,userOrderFrequency,accountAgeInDays,failedPaymentAttempts,orderHour,createdAt
+ORD2604249445,temp@gmail.com,106200.00,75,SUSPICIOUS,"Very high order amount, High order frequency, New user account",ONLINE,false,4,-1,0,21,2026-04-24T21:26:02.848703
+ORD2604242159,temp@gmail.com,106200.00,75,SUSPICIOUS,"Very high order amount, High order frequency, New user account",ONLINE,false,5,-1,0,21,2026-04-24T21:37:30.149480
+ORD2604246121,temp@gmail.com,0.00,35,NORMAL,"High order frequency, New user account",ONLINE,false,6,-1,0,21,2026-04-24T21:37:43.162722
+ORD2604244612,temp@gmail.com,106200.00,75,SUSPICIOUS,"Very high order amount, High order frequency, New user account",ONLINE,false,7,-1,0,21,2026-04-24T21:37:58.645848
+ORD2604244547,temp@gmail.com,106200.00,75,SUSPICIOUS,"Very high order amount, High order frequency, New user account",ONLINE,false,8,-1,0,21,2026-04-24T21:38:17.564354
+ORD2604249901,temp@gmail.com,106200.00,75,SUSPICIOUS,"Very high order amount, High order frequency, New user account",ONLINE,false,9,-1,0,21,2026-04-24T21:38:57.093813
+ORD2604245378,temp@gmail.com,106200.00,75,SUSPICIOUS,"Very high order amount, High order frequency, New user account",ONLINE,false,10,-1,0,21,2026-04-24T21:43:37.760998
+ORD2604245704,temp@gmail.com,106200.00,85,SUSPICIOUS,"Very high order amount, High order frequency, Cash on Delivery payment, New user account",cod,false,11,-1,0,21,2026-04-24T21:50:32.625592
