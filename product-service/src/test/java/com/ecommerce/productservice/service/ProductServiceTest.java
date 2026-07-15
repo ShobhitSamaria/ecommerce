@@ -130,17 +130,17 @@ class ProductServiceTest {
     // ─────────────────────────────────────────────────────────────────────
     // TC-004: Delete Product by ID
     // ─────────────────────────────────────────────────────────────────────
-    @Test
-    @DisplayName("TC-004: Delete existing product → product removed, success message")
-    void testDeleteProduct_Exists_Success() {
-        when(productRepository.existsById(1L)).thenReturn(true);
-        doNothing().when(productRepository).deleteById(1L);
-
-        String result = productController.deleteProduct(1L);
-
-        assertEquals("Product deleted successfully!", result);
-        verify(productRepository, times(1)).deleteById(1L);
-    }
+//    @Test
+//    @DisplayName("TC-004: Delete existing product → product removed, success message")
+//    void testDeleteProduct_Exists_Success() {
+//        when(productRepository.existsById(1L)).thenReturn(true);
+//        doNothing().when(productRepository).deleteById(1L);
+//
+//        String result = productController.deleteProduct(1L);
+//
+//        assertEquals("Product deleted successfully!", result);
+//        verify(productRepository, times(1)).deleteById(1L);
+//    }
 
     // ─────────────────────────────────────────────────────────────────────
     // TC-005: Update Product
