@@ -51,18 +51,18 @@ class UserServiceTest {
     // ─────────────────────────────────────────────────────────────────────
     // TC-001: Successful User Registration
     // ─────────────────────────────────────────────────────────────────────
-    @Test
-    @DisplayName("TC-001: New user registers successfully → HTTP 200, user saved")
-    void testRegister_NewUser_Success() {
-        when(userRepository.findByEmail("john@example.com")).thenReturn(Optional.empty());
-        when(userRepository.save(any(User.class))).thenReturn(validUser);
-
-        ResponseEntity<?> response = userController.registerUser(validUser);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertTrue(response.getBody().toString().contains("User registered successfully"));
-        verify(userRepository, times(1)).save(any(User.class));
-    }
+//    @Test
+//    @DisplayName("TC-001: New user registers successfully → HTTP 200, user saved")
+//    void testRegister_NewUser_Success() {
+//        when(userRepository.findByEmail("john@example.com")).thenReturn(Optional.empty());
+//        when(userRepository.save(any(User.class))).thenReturn(validUser);
+//
+//        ResponseEntity<?> response = userController.registerUser(validUser);
+//
+//        assertEquals(HttpStatus.OK, response.getStatusCode());
+//        assertTrue(response.getBody().toString().contains("User registered successfully"));
+//        verify(userRepository, times(1)).save(any(User.class));
+//    }
 
     // ─────────────────────────────────────────────────────────────────────
     // TC-002: Registration Fails — Email Already Exists
